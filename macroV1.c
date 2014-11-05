@@ -34,7 +34,15 @@ int main (){
             while(check_endof_macro)     
                {          
                  fscanf(fp,"%s %s %s",lbl,opc,opr);
-
+		 counter=search(opc);
+			if(counter!=99)
+			{
+			       	printf("\n@@@@@ %d@@@@@",counter);
+				nestmacro(counter,countdef);
+				// write_to_file(1,counter);
+			   	printf("\nok\n");	
+					continue; 	//Not to read same line again
+			}
                  write_to_file(0,0);
                  check_endof_macro=strcmp(opc,"MEND"); 
                  if(check_endof_macro!=0)
@@ -107,4 +115,8 @@ int write_to_file(check_Expand,counter)
 	fprintf(fw, opr);
 	fprintf(fw, "\n");
 	return 1;
+}
+int nestmacro(int counter,int macroCounter)
+{
+	 strcat( def[macroCounter],def[counter]);
 }
